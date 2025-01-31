@@ -1,6 +1,7 @@
 package com.example.ae_2
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -49,20 +50,19 @@ class MainActivity : ComponentActivity() {
                 .create(SeriesApiService::class.java)
                 .getAllSeries()
             val series : SeriesResponse? = call.body()
-
-            if(call.isSuccessful) {
-                val serieList = series?.series ?: emptyList()
-                displaySeries(serieList)
-            } else {
-                showError()
+            runOnUiThread{
+                if(call.isSuccessful) {
+                    val serieList = series?.series ?: emptyList()
+                    displaySeries(serieList)
+                } else {
+                    showError()
+                }
             }
-
-
         }
     }
 
     private fun showError() {
-        TODO("Not yet implemented")
+        Toast.makeText(this, "Error al cargar series", Toast.LENGTH_SHORT).show()
     }
 
     private fun displaySeries(serieList: List<Serie>) {
