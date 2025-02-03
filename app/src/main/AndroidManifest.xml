@@ -13,12 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AE2"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".Resultados"
-            android:exported="false"
-            android:label="@string/title_activity_resultados"
-            android:theme="@style/Theme.AE2" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

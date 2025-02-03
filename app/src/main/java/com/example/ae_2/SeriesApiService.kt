@@ -6,5 +6,5 @@ import retrofit2.http.Url
 
 interface SeriesApiService {
     @GET
-    suspend fun getAllSeries() : Response<SeriesResponse>
+    suspend fun getAllSeries(@Url url: String) : Response<SeriesResponse>
 }
