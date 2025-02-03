@@ -16,6 +16,9 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.ae_2.ui.theme.AE2Theme
 
@@ -31,17 +34,18 @@ class MainActivity : ComponentActivity() {
                     bottomBar = {
                         BottomAppBar {
                             NavigationBar {
+                                val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
                                 NavigationBarItem(
                                     icon = { Icon(Icons.Rounded.Home, contentDescription = "Home") },
-                                    label = { Text("Home") },
-                                    selected = false,
-                                    onClick = { /* Handle click */ }
+                                    label = { Text("Inicio") },
+                                    selected = currentRoute == "home",
+                                    onClick = { navController.navigate("home") }
                                 )
                                 NavigationBarItem(
                                     icon = { Icon(Icons.Rounded.Info, contentDescription = "Explorar") },
                                     label = { Text("Explorar") },
-                                    selected = true,
-                                    onClick = { /* Handle click */ }
+                                    selected = currentRoute == "explorar",
+                                    onClick = { navController.navigate("explorar") }
                                 )
                             }
                         }
@@ -49,8 +53,18 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize())
                 {
                     innerPadding ->
-                    SeriesScreen(modifier = Modifier.padding(innerPadding)
-                    )
+                    NavHost(
+                        navController = navController,
+                        startDestination = "home",
+                        modifier = Modifier.padding(innerPadding)
+                    ) {
+                        composable("home") {
+                            HomeScreen()
+                        }
+                        composable("explorar") {
+                            SeriesScreen()
+                        }
+                    }
                 }
             }
         }
